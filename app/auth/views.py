@@ -17,15 +17,19 @@ def signin():
 
     return render_template('signin.html',form = form)
 
-@auth.route('/signup')
+@auth.route('/signup', methods =['POST', 'GET'])
 def signup():
     form = SignupForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, email = form.email.data, password=form.password.data)
         if user != None and user.verify_password(form.password.data):
            user.save()
-           mail_message("Welcome to D-Blog","email/welcome",user.email,user=user)
-        return  redirect(url_for('auth.login'))
-    return render_template('auth/signup.html',registration_form=form )
+           mail_message("Hi, Welcome to Prime Code Blog ","email/welcome",user.email,user=user)
+        return  redirect(url_for('signin'))
+    return render_template('signup.html',registration_form=form )
   
-    return render_template('signup.html')    
+@auth.route('/signout')
+@login_required
+def signout():
+    logout_user()
+    return redirect(url_for("main.index"))
