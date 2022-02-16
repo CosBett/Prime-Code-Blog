@@ -5,3 +5,7 @@ from app.auth import auth
 def signin():
   
     return render_template('signin.html')
+@auth.route('/signup')
+def signup():
+  
+    return render_template('signup.html')    
