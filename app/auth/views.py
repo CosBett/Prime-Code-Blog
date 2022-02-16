@@ -5,6 +5,7 @@ from app.auth import auth
 from app. models import User
 from .forms import SigninForm,SignupForm
 from ..email import mail_message
+from .. import db
 @auth.route('/signin', methods =['POST', 'GET'])
 def signin():
     form = SigninForm()
@@ -23,10 +24,11 @@ def signup():
     if form.validate_on_submit():
         user = User(username=form.username.data, email = form.email.data, password=form.password.data)
         if user != None and user.verify_password(form.password.data):
-           user.save()
-           mail_message("Hi, Welcome to Prime Code Blog ","email/welcome",user.email,user=user)
+           db.session.add(user)
+           db.session.commit()
+        mail_message("Hi, Welcome to Prime Code Blog ","email/welcome",user.email,user=user)
         return  redirect(url_for('signin'))
-    return render_template('signup.html',registration_form=form )
+    return render_template('signup.html', form=form )
   
 @auth.route('/signout')
 @login_required

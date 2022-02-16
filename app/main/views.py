@@ -4,4 +4,5 @@ from app.main import main
 
 @main.route('/')
 def index():
+    print('lllllll')
     return render_template('index.html')

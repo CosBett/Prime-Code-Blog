@@ -13,7 +13,6 @@ app = Flask(__name__)
 login_manager = LoginManager(app)
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'signin'
-
 db = SQLAlchemy()
 mail = Mail()
 
@@ -27,7 +26,9 @@ def create_app():
   app.register_blueprint(main_blueprint)
   app.register_blueprint(auth_blueprint)
 
+  db.init_app(app)
   mail.init_app(app)
+ 
   # Initialise bootstrap instance
   # bootstrap.init_app(app)
   
