@@ -23,11 +23,14 @@ def signup():
     form = SignupForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, email = form.email.data, password=form.password.data)
+        print('outside', user)
         if user != None and user.verify_password(form.password.data):
+           print('inside', user)
            db.session.add(user)
            db.session.commit()
-        mail_message("Hi, Welcome to Prime Code Blog ","email/welcome",user.email,user=user)
-        return  redirect(url_for('signin'))
+        mail_message("Hi, Welcome to Prime Code Blog ","email/welcome_user",user.email,user=user)
+        return  redirect(url_for('auth.signin'))
+    print('outside validation', form)
     return render_template('signup.html', form=form )
   
 @auth.route('/signout')
@@ -35,3 +38,4 @@ def signup():
 def signout():
     logout_user()
     return redirect(url_for("main.index"))
+    
