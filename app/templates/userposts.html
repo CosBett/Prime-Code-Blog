@@ -1,6 +1,6 @@
 {% extends 'base.html'%} {% block content %}
 <div class="container">
-  <h1 class="text-center mb-2">{{user.blog.count()}} Posts by {{ user.username }} </h1>
+  <h1 class="text-center mb-2" style="font-weight: 300;">{{user.blog.count()}} Posts by {{ user.username }} </h1>
   <div class="row">
     <div class="col-md-2">
 
@@ -14,11 +14,11 @@
             <img class="rounded-circle blog-img mr-10" src="{{ url_for('static', filename='photos/' + blog.user.profile_pic_path) }}">
           </div>
           <div class="col-md-6">
-            <p>By <span style="color: blue">{{blog.user.username}}</span> on {{blog.posted.strftime('%d-%m-%Y')}}</p>
-            <h3>Tittle: <a href="{{url_for('main.blog',id = blog.id)}}">{{blog.title}}</a></h3>
+            <p>By <span style="color:rgb(76, 86, 221)">{{blog.user.username}}</span> on {{blog.posted.strftime('%d-%m-%Y')}}</p>
+            <h3 style="font-family: 'Lobster', cursive;
+            ">Tittle: <a href="{{url_for('main.blog',id = blog.id)}}">{{blog.title}}</a></h3>
             <p>{{blog.content}}</p>
             <p>{{blog.comment.count()}} Comments</p>
-
           </div>
           <div class="col-md-4">
             <form class="form-inline" action="{{url_for('main.comment',blog_id = blog.id)}}" method="POST">
