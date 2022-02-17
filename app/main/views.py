@@ -8,6 +8,7 @@ import os
 from PIL import Image
 from flask_login import login_required,current_user
 from .forms import UpdateProfile,CreateBlog
+from ..email import mail_message
 
 @main.route('/')
 def index():
@@ -60,3 +61,20 @@ def updateprofile(name):
         user.save()
         return redirect(url_for('.profile',name = name))
     return render_template('updateprofile.html',form =form)
+
+@main.route('/new_blogpost', methods=['POST','GET'])
+@login_required
+def new_blog():
+    subscribers = Subscriber.query.all()
+    form = CreateBlog()
+    if form.validate_on_submit():
+        title = form.title.data
+        content = form.content.data
+        user_id =  current_user._get_current_object().id
+        blog = Blog(title=title,content=content,user_id=user_id)
+        blog.save()
+        for subscriber in subscribers:
+            mail_message("New Blog Post","email/new_blog",subscriber.email,blog=blog)
+        return redirect(url_for('main.index'))
+    flash('You Posted a new Blog')
+    return render_template('newblog.html', form = form)
