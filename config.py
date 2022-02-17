@@ -5,6 +5,7 @@ load_dotenv()
 
 class Config:
    #email configurations
+    print('db===========', os.environ.get('DATABASE_URL'))
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     MAIL_SERVER = 'smtp.googlemail.com'
