@@ -1,5 +1,7 @@
 from flask import render_template,redirect,url_for,abort,request,flash
 from app.main import main
+from app.models import User,Blog,Comment,Subscriber
+from app.requests import get_quotes
 
 @main.route('/')
 def index():
