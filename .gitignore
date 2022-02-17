@@ -2,4 +2,3 @@
 env_blog/
 *pyc
 __pycache__
-migrations/
