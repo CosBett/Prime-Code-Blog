@@ -85,7 +85,7 @@ class Comment(db.Model):
     def get_comment(id):
         comment = Comment.query.all(id=id)
         return comment
-        
+
     def __repr__(self):
         return f'Comment {self.comment}'
 
@@ -102,3 +102,10 @@ class Subscriber(db.Model):
     def __repr__(self):
         return f'Subscriber {self.email}'
 
+class Quotes:
+    def __init__(self,author,id,quote,permalink):
+      self.author = author
+      self.id =id
+      self.quote = quote
+      self.permalink = permalink
+     
